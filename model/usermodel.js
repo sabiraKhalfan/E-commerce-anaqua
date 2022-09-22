@@ -19,6 +19,13 @@ const userSchema = new mongoose.Schema({
     // minlength:8
 
   },
+  phone: {
+    type: Number
+
+    //required:true, 
+    // minlength:8
+
+  },
   repeatpassword: {
     type: String,
     //required:[true,'Please Confirm Your password']

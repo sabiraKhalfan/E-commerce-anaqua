@@ -28,7 +28,7 @@ exports.addProduct = async function (req, res, next) {
 
 
         const categorydata = await catg.find().lean()
-        console.log(categorydata)
+        //console.log(categorydata)
         const newproduct = new product({
             name: req.body.name,
             category: req.body.category,
@@ -80,9 +80,9 @@ exports.updateProduct = async function (req, res, next) {
 
         const files = req.files
         let imageArray = files.map(el => el.filename)
-        console.log("image", imageArray)
+        //console.log("image", imageArray)
 
-        console.log(req.body, req.params.id)
+        //  console.log(req.body, req.params.id)
         if (imageArray[0]) {
             let imageData = await product.findOne({ _id: req.params.id }).lean()
 
@@ -152,10 +152,10 @@ exports.deleteProduct = async function (req, res, next) {
     //     id = request.params.id
     //     await product.findOneAndDelete({ _id: id })
     id = req.params.id
-    console.log(id)
+    //console.log(id)
 
     let imageData = await product.findOne({ _id: id }).lean()
-    console.log(imageData)
+    //console.log(imageData)
 
 
     imageData.image.map(function (el) {
@@ -173,3 +173,4 @@ exports.deleteProduct = async function (req, res, next) {
 
 
 }
+//...........................................................................................................//

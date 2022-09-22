@@ -7,7 +7,7 @@ const product = require('../model/adminmodels/product')
 const fs = require('fs');
 const { populate } = require('./../model/adminmodels/admin_model');
 const console = require('console');
-
+const session = require('express-session')
 
 
 exports.getAdmin = function (req, res, next) {
@@ -26,12 +26,14 @@ exports.adminLogin = async function (req, res, next) {
     try {
         // get admin data from database
         const admin1 = await Admin.findOne({ email: req.body.email })
-        console.log(admin1, 'testend')
+        //console.log(admin1, 'testend')
         const { email, password } = admin1
         //compare input
-        if (email == req.body.email && password === req.body.password)
+        if (email == req.body.email && password === req.body.password) {
+            res.redirect('/admin/dashboard');
+            req.session.admin = true;
 
-            res.redirect('/admin/dashboard')
+        }
 
         else {
             res.send("Incorrect Crediantials! Try again")
@@ -45,9 +47,10 @@ exports.adminLogin = async function (req, res, next) {
 }
 // get All Users
 exports.getAdminUsers = async function (req, res, next) {
+
     try {
         let allUsers = await User.find().lean()
-        console.log(allUsers)
+        //console.log(allUsers)
         res.render('admin/users', { layout: "adminLayout", admin: true, allUsers })
     }
     catch (err) {
@@ -74,4 +77,7 @@ exports.unblockUser = async function (req, res, next) {
 
 }
 //......................................................................................................//
-
+exports.toLogout = function (req, res, next) {
+    req.session.admin = false;
+    res.redirect('/admin/login')
+}

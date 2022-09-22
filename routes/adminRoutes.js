@@ -5,6 +5,7 @@ const adminController = require('./../controllers/adminController')
 const categoryController = require('./../controllers/categoryController')
 const productController = require('./../controllers/productController')
 const upload = require('./../middleware/pic')
+const auth = require('./../middleware/adminProtect')
 
 
 
@@ -48,5 +49,9 @@ router.get('/viewProducts', productController.geteditProduct)
 router.get('/edit_product/:id', productController.editProduct)
 router.post('/edit_product/:id', upload.array('images', 4), productController.updateProduct)
 router.get('/delete_product/:id', upload.array('images', 4), productController.deleteProduct)
+
+
+
+router.get('/logout', adminController.toLogout)
 
 module.exports = router
