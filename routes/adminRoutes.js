@@ -11,40 +11,41 @@ const auth = require('./../middleware/adminProtect')
 
 
 router.route('/login')
-    .get(adminController.getAdmin)
-    .post(adminController.adminLogin)
+    .get(auth.authAdminLogin, adminController.getAdmin)
+    .post(auth.authAdminLogin, adminController.adminLogin)
 
 
 
 
 router.route('/addCategory')
-    .get(categoryController.getaddCategory)
-    .post(categoryController.addCategory)
+    .get(auth.authAdmin, categoryController.getaddCategory)
+    .post(auth.authAdmin, categoryController.addCategory)
 
 
 
 router.route('/edit-category/:id?')
-    .get(categoryController.geteditCategory)
-    .post(categoryController.editCategory)
+    .get(auth.authAdmin, categoryController.geteditCategory)
+    .post(auth.authAdmin, categoryController.editCategory)
 
 
 
-router.get('/viewCategory', categoryController.getAdminCategory)
-router.get('/delete-category/:id', categoryController.DeleteCategory)
+router.get('/viewCategory', auth.authAdmin, categoryController.getAdminCategory)
+router.get('/delete-category/:id', auth.authAdmin, categoryController.DeleteCategory)
 
 
 
-router.get('/dashboard', adminController.getAdminDashboard)
-router.get('/users', adminController.getAdminUsers)
-router.get('/viewusers', adminController.getAdminUsers)
-router.get('/blockUser/:id', adminController.blockUser)
-router.get('/unblockUser/:id', adminController.unblockUser)
+router.get('/dashboard', auth.authAdmin, adminController.getAdminDashboard)
+router.get('/users', auth.authAdmin, adminController.getAdminUsers)
+router.get('/viewusers', auth.authAdmin, adminController.getAdminUsers)
+router.get('/blockUser/:id', auth.authAdmin, adminController.blockUser)
+router.get('/unblockUser/:id', auth.authAdmin, adminController.unblockUser)
 
 
 
 router.route('/addProducts')
     .get(productController.getaddProduct)
     .post(upload.array('images', 4), productController.addProduct)
+
 router.get('/viewProducts', productController.geteditProduct)
 router.get('/edit_product/:id', productController.editProduct)
 router.post('/edit_product/:id', upload.array('images', 4), productController.updateProduct)

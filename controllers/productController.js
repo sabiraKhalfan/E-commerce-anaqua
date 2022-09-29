@@ -14,6 +14,8 @@ const { findByIdAndUpdate } = require('../model/adminmodels/product');
 
 
 exports.getaddProduct = async function (req, res, next) {
+
+
     const categorydata = await catg.find().lean()
     res.render('admin/addProduct', { layout: "adminLayout", admin: true, categorydata })
 }
@@ -22,6 +24,7 @@ exports.getaddProduct = async function (req, res, next) {
 //add a product
 
 exports.addProduct = async function (req, res, next) {
+
     try {
         const files = req.files
         let imageArray = files.map(el => el.filename)
@@ -34,9 +37,10 @@ exports.addProduct = async function (req, res, next) {
             category: req.body.category,
             description: req.body.description,
             price: req.body.price,
-            quantity: req.body.price,
+            stock: req.body.stock,
             discount: req.body.discount,
             image: imageArray
+
         })
         newproduct.save()
 
@@ -51,6 +55,8 @@ exports.addProduct = async function (req, res, next) {
     }
 
 }
+
+
 //.............................................................................................//
 
 //rendering product edit page
@@ -102,7 +108,7 @@ exports.updateProduct = async function (req, res, next) {
                     category: req.body.category,
                     discription: req.body.description,
                     price: req.body.price,
-                    quantity: req.body.quantity,
+                    stock: req.body.stock,
                     discount: req.body.discount,
                     image: imageArray
 
@@ -119,7 +125,7 @@ exports.updateProduct = async function (req, res, next) {
                     category: req.body.category,
                     discription: req.body.description,
                     price: req.body.price,
-                    quantity: req.body.quantity,
+                    stock: req.body.stock,
                     discount: req.body.discount,
                 }
             })

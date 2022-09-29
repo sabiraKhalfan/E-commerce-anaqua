@@ -30,8 +30,10 @@ exports.adminLogin = async function (req, res, next) {
         const { email, password } = admin1
         //compare input
         if (email == req.body.email && password === req.body.password) {
-            res.redirect('/admin/dashboard');
+
             req.session.admin = true;
+            res.redirect('/admin/dashboard');
+
 
         }
 

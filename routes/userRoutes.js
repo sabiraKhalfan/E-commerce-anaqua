@@ -3,7 +3,9 @@ var router = express.Router();
 const userController = require('./../controllers/userController')
 const auth = require('./../middleware/auth')
 const protect = require('../middleware/protect')
-const cartController = require('./../controllers/cartController')
+const cartController = require('./../controllers/cartController');
+const { route } = require('.');
+const wishlistController = require('./../controllers/wishlistController');
 
 
 /* GET users listing. */
@@ -23,16 +25,22 @@ router.route('/logout')
     .get(userController.toLogout)
 
 router.route('/cart')
-    .get(cartController.viewCart)
+    .get(protect, cartController.viewCart)
+
 
 router.route('/shop')
     .get(cartController.viewShop)
 
-router.get('/product_detail/:id', userController.getProductDetail)
-//router.get('/add-to-cart/:id', cartController.getCartPage)
-//router.post('/add-to-cart/:id', protect, cartController.addtoCart)
+router.get('/product_detail/:id', protect, userController.getProductDetail)
+// router.get('/add-to-cart/:id', cartController.getCartPage)
+router.post('/add-To-Cart', protect, cartController.addTocart)
+router.post('/remove-product', protect, cartController.removeProduct)
+
+router.post('/add-To-Cart', cartController.updateQty)
 
 
+router.get('/wishlist', protect, wishlistController.getwishlist)
+router.post('/addWishlist', protect, wishlistController.addWishlist)
 
 
 

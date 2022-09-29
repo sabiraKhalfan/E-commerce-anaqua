@@ -21,7 +21,7 @@ exports.toLogin = function (req, res, next) {
   if (req.session.loggedIn) {
     res.redirect('/')
   } else {
-    res.render('login', { noHeaders: true })
+    res.render('login')
   }
 }
 exports.toregister = function (req, res, next) {
@@ -71,7 +71,7 @@ exports.createUser = async (req, res) => {
     })
     newUser.save()
     // console.log(newUser)
-    req.session.id = newUser._id
+    req.session.userId = newUser._id
     req.session.loggedIn = true;
     res.redirect("/")
   }
@@ -112,7 +112,8 @@ exports.signin = async (req, res) => {
 
     }
     if (user.status == true) {
-      req.session.id = user._id
+
+      req.session.userId = user._id
       req.session.loggedIn = true;
       return res.redirect('/')
     } res.send('You Are Blocked')

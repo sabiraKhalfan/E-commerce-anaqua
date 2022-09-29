@@ -1,7 +1,11 @@
 const protect = (req, res, next) => {
     if (req.session.loggedIn) {
         next()
-    } else {
+    }
+    else if (req.body?.axios) {
+        next()
+    }
+    else {
         res.redirect('/login')
     }
 
