@@ -4,7 +4,7 @@ const catg = require('./../model/adminmodels/add_category');
 const User = require('../model/usermodel');
 const product = require('../model/adminmodels/product');
 const Cart = require('../model/cartModel');
-const wishlist = require('../model/wishlistModel')
+const Wishlist = require('../model/wishlistModel')
 
 
 
@@ -12,49 +12,50 @@ const wishlist = require('../model/wishlistModel')
 
 module.exports = {
     getwishlist: async (req, res) => {
-        userId = req.session.userId
-        wishlistDatas = await wishlist.findOne(
+        const userId = req.session.userId
+        wishlistDatas = await Wishlist.findOne(
             { userId: userId }
         ).populate("products.productId").lean()
         console.log(wishlistDatas)
 
-        res.render('wishlist')
+        res.render('wishlist', { wishlistDatas })
 
     },
     addWishlist: async (req, res) => {
         if (!req.session.loggedIn) {
             return res.json({ logged: false })
         }
-        productId = req.body.productId
+        const productId = req.body.productId
         let userId = req.session.userId
 
-        console.log(userId, "userIdiddddddddddddddddddddddddddddddddddddddddddddddddd")
-        console.log(productId, "productId")
-        const wishlistData = await wishlist.findOne({ userId: userId }).lean()
-        if (wishlistData) {
 
+        const wishlistItem = await Wishlist.findOne({ userId: req.session.userId }).lean()
+        if (wishlistItem) {
 
-            productExist = await wishlist.findOne({ userId: userId, "products.productId": productId })
+            productExist = await Wishlist.findOne({ userId: userId, "products.productId": productId })
             if (productExist)
-                console.log("ethiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-            return res.json({ message: "product already added to wishlist" })
-            await wishlist.findOneAndUpdate({ userId: userId }, { $push: { products: { productId: productId } } });
+
+                return res.json({ message: "product already added to wishlist" })
+
+            console.log("ethiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+            await Wishlist.findOneAndUpdate({ userId: userId }, { $push: { products: { productId: productId } } });
         }
 
         else {
-            await wishlist.create({ userId: userId, products: { productId: productId } })
+            await Wishlist.create({ userId: userId, products: { productId: productId } })
         }
 
+        const wishlistData = await Wishlist.findOne({ userId: req.session.userId }).populate("products.productId").lean()
 
-        wishlistData = await wishlist.findOne({ userId: userId }).populate("products.productId").lean()
-        console.log(wishlistdata, "data")
-        price = (wishlistData.products[0].productId.amount - wishlistData.products[0].productId.discount)
-        // console.log(price)
+        console.log(wishlistData, "data")
 
-        // await wishlist.updateOne({ userId: userId, "products.productId": productId }, { "products.$.price": price })
+        const price = (wishlistData.products[0].productId.price - wishlistData.products[0].productId.discount)
+        console.log(price)
+
+        await Wishlist.updateOne({ userId: userId, "products.productId": productId }, { "products.$.price": price })
 
 
-        // res.json({ message: 'success', wishlist: wishlistData })
+        res.json({ message: 'success', wishlist: wishlistData })
         // delete: async (req, res) => {
         //     productId = req.body.product
         //     userId = req.session.userId
