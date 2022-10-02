@@ -1,11 +1,14 @@
 const express = require('express')
 const User = require('./../model/usermodel')
-const jwt = require('jsonwebtoken')
+
 const Product = require('../model/adminmodels/product')
 
 const process = require('process')
 const { fail } = require('assert')
 const { syncBuiltinESMExports } = require('module')
+const { Router } = require('express')
+const twilioControler = require('./../Controllers/twilioControler')
+
 // const signIntoken = id => {
 //   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
 // }
@@ -50,36 +53,54 @@ exports.createUser = async (req, res) => {
     if ((req.body.password != req.body.repeatpassword)) {
       res.status(400).send("Please Enter Correct Password")
     }
-
-
-
-    // check if user already exist
-    // Validate if user exist in our database
     const oldUser = await User.findOne({ email });
 
     if (oldUser) {
-      return res.status(409).send("User Already Exist. Please Login");
+      res.status(409).send("User Already Exist.");
+
     }
-    //console.log(token)
-    const newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone,
-      password: req.body.password,
-      repeatpassword: req.body.repeatpassword
 
-    })
-    newUser.save()
-    // console.log(newUser)
-    req.session.userId = newUser._id
-    req.session.loggedIn = true;
-    res.redirect("/")
-  }
+    // check if user already exist
+    // Validate if user exist in our database
+    else {
 
-  catch (err) {
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        password: req.body.password,
+        repeatpassword: req.body.repeatpassword
+
+      })
+      newUser.save()
+      // console.log(newUser)
+      req.session.userId = newUser._id
+      req.session.loggedIn = true;
+      res.redirect("/otp")
+
+      twilioControler.doSms(req.body).then((data) => {
+        req.session.body = req.body
+        console.log(data, "datatttttttttttttttttttttaaaaaaaaaaaaa");
+        if (data) {
+          res.redirect('/otp')
+
+
+          console.log(req.body, "otp")
+        }
+        else {
+
+          req.session.message = "Invalid  OTP"
+          res.redirect('/otp')
+        }
+
+      })
+
+    }
+  } catch (err) {
     //res.status(404).json({ status: 'fail', message: 'Somethin wrong' });
     res.redirect('/')
   }
+
 
 }
 
@@ -143,4 +164,30 @@ exports.getProductDetail = async function (req, res, next) {
 
 
   res.render('product-detail', { productdetail })
+}
+
+
+
+
+//.....................................................................................................//
+
+
+
+exports.post_Otp = function (req, res, next) {
+  console.log("Hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+  twilioControler.otpVerify(req.body, req.session.body).then((response) => {
+
+    if (response) {
+
+
+      // User.findOneAndUpdate({ _id: req.session.userId }, { $set: { otpVerified: true } })
+      res.redirect('/login')
+    }
+    else {
+      res.redirect('/signup')
+    }
+
+  })
+
+
 }

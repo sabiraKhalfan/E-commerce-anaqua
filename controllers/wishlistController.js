@@ -25,43 +25,46 @@ module.exports = {
         if (!req.session.loggedIn) {
             return res.json({ logged: false })
         }
-        const productId = req.body.productId
-        let userId = req.session.userId
+        try {
+
+            const wishlistItem = await Wishlist.findOne({ userId: req.session.userId }).lean()
+            if (wishlistItem) {
+
+                productExist = await Wishlist.findOne({ userId: userId, "products.productId": req.body.productId })
+                if (productExist)
+                    return res.json({ message: "product already added to wishlist" });
+                await Wishlist.findOneAndUpdate({ userId: req.session.userId }, { $push: { products: { productId: req.body.productId } } });
+            }
+
+            else {
 
 
-        const wishlistItem = await Wishlist.findOne({ userId: req.session.userId }).lean()
-        if (wishlistItem) {
+                await Wishlist.create({ userId: req.session.userId, products: { productId: req.body.productId } })
+            }
 
-            productExist = await Wishlist.findOne({ userId: userId, "products.productId": productId })
-            if (productExist)
+            const wishlistDatas = await Wishlist.findOne({ userId: req.session.userId }).populate("products.productId").lean()
 
-                return res.json({ message: "product already added to wishlist" })
+            console.log(wishlistDatas, "data")
 
-            console.log("ethiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-            await Wishlist.findOneAndUpdate({ userId: userId }, { $push: { products: { productId: productId } } });
+
+            await Wishlist.updateOne({ userId: req.session.userId, "products.productId": req.session.userId })
+            return res.json({ message: 'success' })
+
+
+        } catch (error) {
+
+            return res.json({ message: 'server faiure', error: error })
+
+
+
         }
+    },
+    deleteWishlist: async (req, res) => {
 
-        else {
-            await Wishlist.create({ userId: userId, products: { productId: productId } })
-        }
+        const productId = req.body.prodId
 
-        const wishlistData = await Wishlist.findOne({ userId: req.session.userId }).populate("products.productId").lean()
-
-        console.log(wishlistData, "data")
-
-        const price = (wishlistData.products[0].productId.price - wishlistData.products[0].productId.discount)
-        console.log(price)
-
-        await Wishlist.updateOne({ userId: userId, "products.productId": productId }, { "products.$.price": price })
-
-
-        res.json({ message: 'success', wishlist: wishlistData })
-        // delete: async (req, res) => {
-        //     productId = req.body.product
-        //     userId = req.session.userId
-        //     console.log("hi from delete", req.session)
-        //     deletes = await wishlist.updateOne({ userId: userId }, { $pull: { products: { productId: req.body.product } } })
-        //    res.json({})
-        // }
+        console.log("hi from delete", productId)
+        deletes = await Wishlist.updateOne({ userId: req.session.userId }, { $pull: { products: { productId: req.body.prodId } } })
+        res.json({})
     }
 }

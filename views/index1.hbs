@@ -481,16 +481,39 @@
 
 	<script>
 		function addToWishlist(id) {
+			event.preventDefault();
+
 			console.log(id)
 			let data = {}
 			data.productId = id
 			data.axios = true;
-			axios.post('/addWishlist', data).then(res => {
-				if (!res.data.logged) location.href = '/login';
+			axios.post('/addWishlist', data)
+				.then(function (response) {
+					console.log(response.data)
 
-			}).then(funtion(response))
-			console.log(response.data)
-			swal("success");
+					Swal.fire({
+						title: 'succes',
+					})
+				})
+				.catch(function (error) {
+					Swal.fire({
+						title: 'failure',
+
+					})
+
+				})
 
 		}
 	</script>
+	{{!-- <div class=" mb-2">
+		<p>My Account</p><br>
+
+		<a href="/myCart">My Cart</a><br>
+
+		<a href="/myOrders">My Orders</a><br>
+		<a href="/myWishlist">My Wishlist</a><br>
+		<a data-toggle="modal" data-target="#editDetails" data-bs-whatever="@mdo">Edit
+			Details</a><br>
+
+
+	</div> --}}

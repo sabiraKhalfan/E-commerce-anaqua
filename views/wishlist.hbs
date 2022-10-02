@@ -1,138 +1,141 @@
-<!-- Product -->
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Shoping Cart
+        </span>
+    </div>
+</div>
 
 
-
-
-
-
-
-
-
-
-
-<!-- Product -->
-<section class="bg0 p-t-90 p-b-50">
+<!-- Shoping Cart -->
+<form class="bg0 p-t-75 p-b-85">
     <div class="container">
-        <div class="p-b-10">
-            <h3 class="ltext-103 cl5">Wishlist </h3>
-        </div>
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            <tr class="table_head">
+                                <th class="column-1">Product</th>
+                                <th class="column-2 "></th>
+                                <th></th>
+                                <th class="column-3">Add to cart</th>
+                                <th class="colum-4">Delete</th>
+                            </tr>
+                            {{#each wishlistDatas.products}}
+                            <tr class="table_row">
+                                <td class="column-1">
+                                    <div class="how-itemcart1">
+                                        <img src="/multerimages/{{productId.image.[0]}}">
+                                    </div>
+                                </td>
+
+                                <td class="column-2">
+                                    {{productId.name}}
+                                </td>
+                                <td class="column-3">
 
 
 
-        <div class="row isotope-grid">
-            {{#each wishlistDatas.products}}
-            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{this.productId.category}}">
-                <!-- Block2 -->
-                <div class="block2">
-                    <div class="block2-pic hov-img0">
-                        <img src="/productImageUploads/{{this.productId.imagepath.[0]}}" alt="IMG-PRODUCT" />
+                                </td>
+                                <td>
+                                    <a href="/product_detail/{{productId._id}}" class=" btn btn-primary px-3 ml-4 ">
+                                        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button id="remove" class=" btn btn-danger px-3" prodId={{productId._id}}>
+                                        <i class="fa fa-trash-o" style="" aria-hidden="true"></i> </button>
+                                </td>
 
-                        <a href="/quickView/{{this.productId._id}}"
-                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
-                            Quick View
-                        </a>
+                            </tr>
+
+                            {{/each}}
+                        </table>
+
                     </div>
 
-                    <div class="block2-txt flex-w flex-t p-t-14">
-                        <div class="block2-txt-child1 flex-col-l">
-                            <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                {{this.productId.name}}
-                            </a>
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                            <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
+                                name="coupon">
 
-                            <span class="stext-105 cl3"> ₹{{this.productId.amount}} </span>
+                            <div
+                                class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+
+                            </div>
                         </div>
 
-                        {{!-- <div class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                    alt="ICON" />
-                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png"
-                                    alt="ICON" />
-                            </a>
-                        </div> --}}
-                        <span>
-                            <div><button type="button" class="btn btn-dark  btn-sm">Add to Cart</button></div>
-                        </span>
+                        <div
+                            class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 
-                        <span>
-                            <div><button type="button" onclick="deleteProduct('{{this.productId._id}}')"
-                                    class="btn btn-danger ml-1 btn-sm">Delete</button></div>
-                        </span>
-
+                        </div>
                     </div>
                 </div>
             </div>
-            {{/each}}
 
-
-        </div>
-
-        <!-- Load more -->
-        <div class="flex-c-m flex-w w-full p-t-45">
-            <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-                Load More
-            </a>
-        </div>
-    </div>
-</section>
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                    <br>
+                    <h4 class="mtext-109 cl2 p-b-30">
+                        Cart Totals
+                    </h4>
 
 
 
 
+                    <br>
+                    <div class="flex-w flex-t p-t-27 p-b-33">
+                        <div class="size-208">
 
-
-
-
-
-{{!-- <section class="bg0 p-t-90 p-b-50">
-    <div class="container">
-        <div class="p-b-10">
-            <h3 class="ltext-103 cl5">Wishlist </h3>
-        </div>
-
-        <div class="row isotope-grid">
-            {{#each wishlistDatas.products}}
-            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-                <!-- Block2 -->
-                <div class="block2">
-                    <div class="block2-pic hov-img0">
-                        <img src="/multerimages/{{this.productId.imagepath.[0]}}">
-
-                        <a href="/product_detail/{{this._id}}"
-                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                            Quick View
-                        </a>
-                    </div>
-
-                    <div class="block2-txt flex-w flex-t p-t-14">
-                        <div class="block2-txt-child1 flex-col-l ">
-                            <a href="/product_detail/{{this._id}}"
-                                class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                {{this.productId.name}}
-                            </a>
-
-                            <span class="stext-105 cl3">
-                                ₹{{this.productid.price}}
+                            <span class="mtext-101 cl2">
+                                Total:
                             </span>
                         </div>
 
-                        <div class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                    alt="ICON">
-                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png "
-                                    alt="ICON">
-                            </a>
-                        </div>
-                        <a href="/add-To-Cart/{{this._id}}" class="m-3"><i style="color: #050505;"
-                                class="fa-solid fa-bag-shopping"></i></a>
-                        <a href="/delete_product/{{this._id}}"
-                            onclick="return confirm('Are you sure about deleting {{this.name}}')" class="m-3 "><i
-                                class="fa fa-trash-o" style="color: #580909;" aria-hidden="true"></i></a>
+                        <div class="size-209 p-t-1">
+                            <span class="mtext-110 cl2">
 
+                            </span>
+                        </div>
                     </div>
+
+                    <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        Proceed to Checkout
+                    </button>
+                    <br>
                 </div>
             </div>
-            {{/each}}
         </div>
-</section> --}}
+    </div>
+</form>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+
+
+    $(document).ready(function () {
+
+        $('#remove').on('click', function () {
+
+            const prodId = $(this).attr('prodId');
+
+            axios.post('/delete_wishlist', { prodId }).then(e => {
+                swal({
+
+                    title: "Good job!",
+                    text: "You clicked the button!",
+                    icon: "success",
+                });
+            })
+        })
+
+    })
+
+</script>

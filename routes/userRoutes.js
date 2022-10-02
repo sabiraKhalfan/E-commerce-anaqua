@@ -6,8 +6,8 @@ const protect = require('../middleware/protect')
 const cartController = require('./../controllers/cartController');
 const { route } = require('.');
 const wishlistController = require('./../controllers/wishlistController');
-
-
+const profileController = require('./../controllers/profileController');
+const twilioControler = require('./../Controllers/twilioControler')
 /* GET users listing. */
 
 router.get('/', userController.indexRouter);
@@ -41,7 +41,15 @@ router.post('/add-To-Cart', cartController.updateQty)
 
 router.get('/wishlist', protect, wishlistController.getwishlist)
 router.post('/addWishlist', protect, wishlistController.addWishlist)
+router.post('/delete_wishlist', protect, wishlistController.deleteWishlist)
 
+router.get('/profile', protect, profileController.getuserProfile)
+router.post("/updateDetails", protect, profileController.updateProfile)
+
+
+
+router.get('/otp', protect, twilioControler.viewpage)
+router.post('/otp', protect, userController.post_Otp)
 
 
 module.exports = router;

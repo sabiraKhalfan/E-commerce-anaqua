@@ -27,3 +27,8 @@ module.exports = {
 // }
 
 
+// .then(res => {
+//     if (!res.data.logged) location.href = '/login';
+
+// })
+

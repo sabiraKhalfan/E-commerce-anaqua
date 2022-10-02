@@ -1,0 +1,197 @@
+<script>
+    src = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity = "sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin = "anonymous"
+</script>
+
+
+
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Shoping Cart
+        </span>
+    </div>
+</div>
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<div class="m-5">
+    <section class="section-conten padding-y bg">
+
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-3">
+                    <!--   SIDEBAR   -->
+                    <ul class="list-group">
+                        <a class="list-group-item active" href="#">My Account </a>
+                        <a class="list-group-item" href="#"> My orders </a>
+                        <a class="list-group-item" href="#"> My wishlist </a>
+                        <a class="list-group-item" href="#"> Manage Address </a>
+                    </ul>
+                    <br>
+                    <a class="btn btn-light btn-block" href="/logout"> <i class="fa fa-power-off"></i> <span
+                            class="text">Log
+                            out</span> </a>
+                    <!--   SIDEBAR .//END   -->
+                </aside>
+                <div class="col-lg-8">
+                    <div class="align-center">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#editDetails" data-bs-whatever="@mdo">Edit</button>
+
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Full Name</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{user.name}}
+                                    </p>
+
+
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{user.email}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Phone</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{user.phone}}</p>
+                                </div>
+                            </div>
+                            {{!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#editDetails" data-bs-whatever="@mdo">Edit</button> --}}
+                        </div>
+
+                    </div>
+                </div> <!-- row.// -->
+
+            </div>
+
+
+        </div>
+
+
+        <div class="modal fade" id="editDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Update Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Name:</label>
+                                <input id="name" class="form-control" name="name" value="{{user.name}}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Phone</label>
+                                <input id="phone" type="text" class="form-control" id="phone" name="phone"
+                                    value=" {{user.phone}}">
+                            </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" onclick="editname({{this.id}})" class="btn btn-primary">Update</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- PasswordModal -->
+        <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">change Password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Old Password</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="old_psd" placeholder="Old Password" id="old_psd">
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">New Password</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="new-psd" placeholder="New Password" id="new-psd">
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="textinput">Re Password</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="re-psd" placeholder="Re Password" </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success edit-psd">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+                crossorigin="anonymous"></script>
+    </section>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script>
+
+
+    function editname(userId) {
+
+        let name = document.getElementById('name').value;
+        console.log(name)
+        axios.post('/updateDetails',
+            {
+                name: name
+            })
+            .then(function (response) {
+
+                alert("Name Changed Succesfully")
+            })
+            .catch(function (error) {
+                alert(error)
+
+
+            });
+    }
+
+
+
+</script>
