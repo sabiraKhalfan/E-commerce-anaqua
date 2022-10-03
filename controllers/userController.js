@@ -17,6 +17,7 @@ exports.indexRouter = async function (req, res, next) {
   const product = await Product.find().lean()
   // console.log(product)
   userLoggedIn = req.session.loggedIn
+  let username = req.session.name
   res.render('index1', { userLoggedIn, product })
 }
 
@@ -76,26 +77,18 @@ exports.createUser = async (req, res) => {
       // console.log(newUser)
       req.session.userId = newUser._id
       req.session.loggedIn = true;
-      res.redirect("/otp")
+      req.session.phone = req.body.phone
 
-      twilioControler.doSms(req.body).then((data) => {
-        req.session.body = req.body
-        console.log(data, "datatttttttttttttttttttttaaaaaaaaaaaaa");
-        if (data) {
-          res.redirect('/otp')
+      twilioControler.sendOtp(req.body.phone)
+
+      res.redirect('/otp')
 
 
-          console.log(req.body, "otp")
-        }
-        else {
-
-          req.session.message = "Invalid  OTP"
-          res.redirect('/otp')
-        }
-
-      })
-
+      console.log(req.body, "otp")
     }
+
+
+
   } catch (err) {
     //res.status(404).json({ status: 'fail', message: 'Somethin wrong' });
     res.redirect('/')
@@ -135,6 +128,8 @@ exports.signin = async (req, res) => {
     if (user.status == true) {
 
       req.session.userId = user._id
+      req.session.name = user.name
+
       req.session.loggedIn = true;
       return res.redirect('/')
     } res.send('You Are Blocked')
@@ -172,22 +167,21 @@ exports.getProductDetail = async function (req, res, next) {
 //.....................................................................................................//
 
 
+exports.viewpage = async function (req, res, next) {
+  res.render('otp')
+}
+//....................................................................................................//
+exports.postotp = async function (req, res, next) {
+  const phone = req.session.phone
+  const userId = req.session.userId
 
-exports.post_Otp = function (req, res, next) {
-  console.log("Hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-  twilioControler.otpVerify(req.body, req.session.body).then((response) => {
+  console.log("phone", phone)
+  const data = await twilioControler.verifyOtp(phone, req.body.otp)
 
-    if (response) {
-
-
-      // User.findOneAndUpdate({ _id: req.session.userId }, { $set: { otpVerified: true } })
-      res.redirect('/login')
-    }
-    else {
-      res.redirect('/signup')
-    }
-
-  })
-
-
+  if (data.valid) {
+    res.redirect('/login')
+    await User.findOneAndUpdate({ _id: userId }, { $set: { otpVerified: true } })
+  } else {
+    res.redirect('/otp')
+  }
 }

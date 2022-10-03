@@ -1,233 +1,324 @@
-<!-- breadcrumb -->
-<div class="container">
-	<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-		<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
-			Home
-			<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-		</a>
-
-		<span class="stext-109 cl4">
-			Shoping Cart
-		</span>
-	</div>
-</div>
-
-
-<!-- Shoping Cart -->
-<form class="bg0 p-t-75 p-b-85">
+<body>
+	<!-- breadcrumb -->
 	<div class="container">
-		<div class="row">
-			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-				<div class="m-l-25 m-r--38 m-lr-0-xl">
-					<div class="wrap-table-shopping-cart">
-						<table class="table-shopping-cart">
-							<tr class="table_head">
-								<th class="column-1">Product</th>
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+				Home
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
 
-								<th class="column-2 ml-25">Price</th>
-								<th class="column-3">Quantity</th>
-								<th class="column-4 ">Total</th>
-
-								<th class="column-5 ">Discount</th>
-							</tr>
-							{{#each cart.products}}
-							<tr class="table_row">
-								<td class="column-1">
-									<div class="how-itemcart1">
-										<img src="/multerimages/{{productId.image.[0]}}">
-									</div>
-								</td>
-
-								<td class="column-2">{{productId.price}}</td>
+			<span class="stext-109 cl4">
+				Shoping Cart
+			</span>
+		</div>
+	</div>
 
 
+	<!-- Shoping Cart -->
+	<form class="bg0 p-t-75 p-b-85">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+					<div class="m-l-25 m-r--38 m-lr-0-xl">
+						<div class="wrap-table-shopping-cart">
+							<table class="table-shopping-cart">
+								<tr class="table_head">
+									<th class="column-1">Product</th>
 
+									<th class="column-2 ml-25">Price</th>
+									<th class="column-3">Quantity</th>
+									<th class="column-4 ">Total</th>
 
-
-								{{!-- <td class="column-4">{{this.quantity}}</td> --}}
-								<td class="column-3">
-									<div class="wrap-num-product flex-w m-l-auto m-r-0">
-										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m minus"
-											prodId={{productId._id}}>
-											<i class="fs-16 zmdi zmdi-minus"></i>
+									{{!-- <th class="column-5 ">Discount</th> --}}
+								</tr>
+								{{#each cart.products}}
+								<tr class="table_row">
+									<td class="column-1">
+										<div class="how-itemcart1">
+											<img src="/multerimages/{{productId.image.[0]}}">
 										</div>
-										<input id="increment{{productId._id}}"
-											class="mtext-104 cl3 txt-center num-product" disabled min="1" max="10"
-											type="number" name="num-product1" value="{{this.quantity}}">
+									</td>
 
-										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m plus"
-											prodId={{productId._id}}>
-											<i class="fs-16 zmdi zmdi-plus"></i>
+									<td class="column-2">{{productId.price}}</td>
+
+
+
+
+
+									{{!-- <td class="column-4">{{this.quantity}}</td> --}}
+									<td class="column-3">
+										<div class="wrap-num-product flex-w m-l-auto m-r-0">
+											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
+												onclick="incrementQty('{{this.productId._id}}',0);">
+												<i class="fs-16 zmdi zmdi-minus"></i>
+											</div>
+											<input id="increment{{this.productId._id}}" value="{{this.quantity}}"
+												class="mtext-104 cl3 txt-center num-product" type="number" min="1"
+												max="10" name="numProduct">
+
+											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+												onclick="incrementQty('{{this.productId._id}}',1);">
+												{{!-- <a onclick="increment(`{{this.product._id}}`)" id="increment" </a>
+													--}}
+													<i class="fs-16 zmdi zmdi-plus"></i>
+											</div>
 										</div>
-									</div>
-								</td>
+										{{!-- <div class="wrap-num-product flex-w m-l-auto m-r-0">
+											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m minus "
+												onclick="
+												changeQuantity('{{this._id}}','{{productId._id}}', -1)"">
+												<button>
+
+													<i class=" fs-16 zmdi zmdi-minus"></i></button>
+
+											</div>
+											<input id="incerment" class="mtext-104 cl3 txt-center num-product" disabled
+												min="1" max="10" type="number" name="num-product1"
+												value="{{this.quantity}}">
+
+											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m plus">
+												<button>
+
+													<i class="fs-16 zmdi zmdi-plus"
+														onclick="changeQuantity('{{this._id}}','{{productId._id}}',1)">
+													</i></button>
+
+											</div> --}}
+										</div>
+									</td>
 
 
-								<td class="column-4" id="eachTotal{{productId._id}}">{{this.total}} </td>
-								</td>
+									<td class="column-4" id="total">
+									</td>
+									</td>
 
 
-								<td class="column-2 px-5">{{productId.discount}}</td>
+									{{!-- <td class="column-2 px-5">{{productId.discount}}</td> --}}
 
 
-								<td>
-									{{!-- <a href="/remove-product'/{{this._id}}" class="m-3 "><i class="fa fa-trash-o"
-											style="color: #9c0404;" aria-hidden="true"></i> --}}
-										<button id=" Remove" class=" btn btn-danger px-3 " onclick=" removeProduct
-                                     ('{{productId._id}}','{{cart._id}}')"> remove</button>
+									<td>
+										{{!-- <a href="/remove-product'/{{this._id}}" class="m-3 "><i
+												class="fa fa-trash-o" style="color: #9c0404;" aria-hidden="true"></i>
+											--}}
+											{{!-- <button id="remove" class=" btn btn-danger px-3" <i
+												class="fa fa-trash-o" style="" aria-hidden="true"></i> </button> --}}
+											<button id=" Remove" class=" btn btn-danger px-3 " onclick=" removeProduct
+                                     ('{{productId._id}}','{{cart._id}}')"> <i class="fa fa-trash-o" style=""
+													aria-hidden="true"></i></button>
 
 
-								</td>
+									</td>
 
-							</tr>
-							{{/each}}
+								</tr>
+								{{/each}}
 
-						</table>
-					</div>
+							</table>
+						</div>
 
-					<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-						<div class="flex-w flex-m m-r-20 m-tb-5">
-							<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-								name="coupon">
+						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+							<div class="flex-w flex-m m-r-20 m-tb-5">
+								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
+									name="coupon">
+
+								<div
+									class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+
+								</div>
+							</div>
 
 							<div
-								class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+								class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 
 							</div>
 						</div>
-
-						<div
-							class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-
-						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-				<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-					<br>
-					<h4 class="mtext-109 cl2 p-b-30">
-						Cart Totals
-					</h4>
-
-
-
-
-					<br>
-					<div class="flex-w flex-t p-t-27 p-b-33">
-						<div class="size-208">
-
-							<span class="mtext-101 cl2">
-								Total:
-							</span>
+				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+						<br>
+						<h4 class="mtext-109 cl2 p-b-30">
+							Cart Totals
+						</h4>
+						<br>
+						<div class="flex-w flex-t p-t-27 p-b-33">
+							<div class="size-208">
+								<span class="mtext-101 cl2">
+									Total:
+								</span>
+							</div>
+							<div class="size-209 p-t-1">
+								<span class="mtext-110 cl2">
+									{{cart.finalTotal}}
+								</span>
+							</div>
 						</div>
 
-						<div class="size-209 p-t-1">
-							<span class="mtext-110 cl2">
-								{{cart.finalTotal}}
-							</span>
-						</div>
+						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer "
+							style="width: 62%">
+							Checkout
+						</button>
+						<br>
 					</div>
-
-					<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-						Proceed to Checkout
-					</button>
-					<br>
 				</div>
 			</div>
 		</div>
-	</div>
-</form>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	</form>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<script>
-	$(document).ready(function () {
-		/*
-					let qty = document.getElementById('increment'+id).value
-					qty=parseInt(qty)
-					if(num===1){
-						qty=qty+1
-					}
-					else{
-						qty=qty-1
-					} */
-		$('.plus').click(function () {
-			const prodId = $(this).attr('prodId');
-			const td = $(this).closest('td').next()
-			console.log(td)
+	<script>
+		/* $(document).ready(function () {
 
-			axios.post('/add-To-Cart', { productId: prodId, quantity: 1 }).then(response => {
-				location.reload()
-				console.log(response.data)
+			let qty = document.getElementById('increment').value
 
-				td.text(response.data.productTotal)
 
+			qty = parseInt(qty)
+			if (num === 1) {
+				qty = qty + 1
+			}
+			else {
+				qty = qty - 1
+			}
+			console.log(qty)
+			$('.plus').click(function () {
+
+				const prodId = $(this).attr('prodId');
+
+				const td = $(this).closest('td').next()
+				console.log(td)
+
+				axios.post('/add-To-Cart', { productId: prodId, quantity }).then(response => {
+					location.reload()
+					console.log(response.data)
+
+					td.text(response.data.productTotal)
+
+				})
+			})
+
+
+			$('.minus').click(function () {
+				const prodId = $(this).attr('prodId');
+				const td = $(this).closest('td').next()
+				console.log(td)
+
+
+				axios.post('/add-To-Cart', { productId: prodId, quantity }).then(response => {
+					location.reload()
+					console.log(response.data)
+					td.text(response.data.productTotal)
+				})
 			})
 		})
+ 
 
+		function changeQuantity(cartId, productId, qty) {
 
-		$('.minus').click(function () {
-			const prodId = $(this).attr('prodId');
-			const td = $(this).closest('td').next()
-			console.log(td)
+			console.log(cartId)
+			console.log(productId)
+			let qaty = document.getElementById('increment').value
+			alert('clicked')
+			qaty = parseInt(qaty)
+			/*if (num === 1) {
+				qty = qty + 1
+			}
+			else {
+				qty = qty - 1
+			}
 
-
-			axios.post('/add-To-Cart', { productId: prodId, quantity: -1 }).then(response => {
-				location.reload()
-				console.log(response.data)
-				td.text(response.data.productTotals)
+			axios({
+				url: '/changeProductQuantity',
+				method: 'post',
+				data: {
+					cart: cartId,
+					product: productId,
+					quantity: qaty
+				}
 			})
-		})
-	})
+				.then(function (response) {
+					alert('success')
+					console.log(response)
+
+						.catch(function (error) {
+							alert('failure')
+							console.log(error)
+						})
+				})
+		}*/
 
 
-	/*	function incrementQty(id,num){
-			let qty = document.getElementById('increment'+id).value
-			qty=parseInt(qty)
-			if(num===1){
-				qty=qty+1
+		//======================= I N C R E M E N T  Q U A N T I T Y =======================
+
+		function incrementQty(id, num) {
+			let qty = document.getElementById('increment' + id).value
+			let numProduct = document.getElementById(id)
+			qty = parseInt(qty)
+
+			if (num === 1) {
+				qty = qty + 1
+			} else {
+				qty = qty - 1
 			}
-			else{
-				qty=qty-1
-			}
-			
-			axios.post('/increment',{productId:id,quantity:qty})
-			.then(function (response) {alert('success')
-			console.log(response)
-			
-			.catch(function (error) {alert('failure')
-			console.log(error)}) 
+			event.preventDefault()
+			axios({
+				method: 'post',
+				url: '/increment',
+				data: {
+					product: id,
+					quantity: qty
+				}
+			})
+				.then((e) => {
+					console.log(e.data.total)
+					const Toast = Swal.mixin({
+						toast: true,
+						position: 'bottom-start',
+						showConfirmButton: false,
+						timer: 2000,
+						timerProgressBar: true,
+						didOpen: (toast) => {
+							toast.addEventListener('mouseenter', Swal.stopTimer)
+							toast.addEventListener('mouseleave', Swal.resumeTimer)
+						}
+					})
+
+
+					Toast.fire({
+						icon: 'success',
+						title: 'Item Updated'
+					})
+					let total = document.getElementById('total')
+					total.innerHTML = e.data.total
+
+
+
+				})
 		}
-}*/
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		function removeProduct(proId, cartId) {
 
 
-	function removeProduct(proId, cartId) {
-
-
-		axios.post('/remove-product', {
-			product: proId,
-			cart: cartId,
-		})
-			.then(function (response) {
-				console.log(response)
-				Swal.fire({
-					title: 'Removed',
-					text: response.data.message,
-					footer: '<a href="">Why do I have this issue?</a>'
-				})
-
+			axios.post('/remove-product', {
+				product: proId,
+				cart: cartId,
 			})
-			.catch(function (error) {
-				Swal.fire({
-					title: 'failure',
-					text: error.data.message,
-					footer: '<a href="">Why do I have this issue?</a>'
+				.then(function (response) {
+					console.log(response)
+					Swal.fire({
+						title: 'Removed',
+						text: response.data.message,
+						footer: '<a href="">Why do I have this issue?</a>'
+					})
+
 				})
+				.catch(function (error) {
+					Swal.fire({
+						title: 'failure',
+						text: error.data.message,
+						footer: '<a href="">Why do I have this issue?</a>'
+					})
 
 
-			});
-	}
-
-
-</script>
+				});
+		}
+	</script>

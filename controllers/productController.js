@@ -38,7 +38,7 @@ exports.addProduct = async function (req, res, next) {
             description: req.body.description,
             price: req.body.price,
             stock: req.body.stock,
-            discount: req.body.discount,
+            sellingprice: req.body.sellingprice,
             image: imageArray
 
         })
@@ -109,7 +109,7 @@ exports.updateProduct = async function (req, res, next) {
                     discription: req.body.description,
                     price: req.body.price,
                     stock: req.body.stock,
-                    discount: req.body.discount,
+                    sellingprice: req.body.sellingprice,
                     image: imageArray
 
 
@@ -126,7 +126,7 @@ exports.updateProduct = async function (req, res, next) {
                     discription: req.body.description,
                     price: req.body.price,
                     stock: req.body.stock,
-                    discount: req.body.discount,
+                    sellingprice: req.body.sellingprice,
                 }
             })
         }

@@ -33,8 +33,18 @@
                         <a class="list-group-item active" href="#">My Account </a>
                         <a class="list-group-item" href="#"> My orders </a>
                         <a class="list-group-item" href="#"> My wishlist </a>
-                        <a class="list-group-item" href="#"> Manage Address </a>
+                        <a class="list-group-item" href="/manageaddress"> Manage Address </a>
                     </ul>
+                    <br>
+                    <div class="align-center">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#editDetails" data-bs-whatever="@mdo">Edit Name</button>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#passwordModal" data-bs-whatever="@mdo">Edit Password</button>
+                    </div>
+
                     <br>
                     <a class="btn btn-light btn-block" href="/logout"> <i class="fa fa-power-off"></i> <span
                             class="text">Log
@@ -42,11 +52,7 @@
                     <!--   SIDEBAR .//END   -->
                 </aside>
                 <div class="col-lg-8">
-                    <div class="align-center">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#editDetails" data-bs-whatever="@mdo">Edit</button>
 
-                    </div>
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="row">
@@ -135,30 +141,34 @@
                     </div>
                     <div class="modal-body">
                         <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="textinput">Old Password</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="old_psd" placeholder="Old Password" id="old_psd">
-                            </div>
+                        <div class="modal-body">
+                            <form id="form">
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Old Password</label>
+                                    <input id="oldpwd" type="text" class="form-control" name="oldpwd" value="">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">New Password</label>
+                                    <input id="newpwd" type="text" class="form-control" id="newpwd" name="phone"
+                                        value=" ">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Re Password</label>
+                                    <input id="repwd" type="text" class="form-control" id="repwd" name="phone"
+                                        value=" ">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" onclick="updatepwd({{this.id}})"
+                                        class="btn btn-primary">Update</button>
+                                </div>
+
                         </div>
                         <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="textinput">New Password</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="new-psd" placeholder="New Password" id="new-psd">
-                            </div>
-                        </div>
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="textinput">Re Password</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="re-psd" placeholder="Re Password" </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success edit-psd">Save changes</button>
-                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -183,7 +193,7 @@
             })
             .then(function (response) {
 
-                alert("Name Changed Succesfully")
+                alert("User Updated Succesfully")
             })
             .catch(function (error) {
                 alert(error)
@@ -192,6 +202,19 @@
             });
     }
 
+    function updatepwd(userId) {
+        let pwd = document.getElementById('oldpwd').value;
+        console.log(pwd)
+        axios.post('/updatepwd', {
+            password: pwd
+        }).then(function (response) {
+            location.reload()
+            alert("Password Updated Succesfully")
+        })
+            .catch(function (error) {
+                alert(error)
 
+            })
+    }
 
 </script>

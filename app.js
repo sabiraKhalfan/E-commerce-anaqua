@@ -39,9 +39,7 @@ app.engine('hbs', hbs.engine({
     inc1: function (context) {
       return context + 1
     },
-    total: function (eachtotal, discount, quantity) {
-      return (eachtotal - discount) * quantity
-    },
+
     showtotal: function (price, quantity) {
       return (price * quantity)
     }
@@ -105,3 +103,8 @@ app.listen(port, () => {
 
 })
 module.exports = app;
+
+
+
+
+

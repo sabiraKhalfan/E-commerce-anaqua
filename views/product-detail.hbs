@@ -78,7 +78,7 @@
 					</h4>
 
 					<span class="mtext-106 cl2">
-						{{productdetail.price}}
+						{{productdetail.sellingprice}}
 					</span>
 
 					<p class="stext-102 cl3 p-t-23">
@@ -143,7 +143,7 @@
 
 								<div class="header-cart-buttons flex-w w-full">
 
-									<button onclick="addtocart('{{productdetail._id}}')"
+									<button onclick="addToCart('{{productdetail._id}}')"
 										class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10 ">
 										Add to cart
 									</button>
@@ -711,12 +711,14 @@
 
 <script>
 
-	function addtocart(id) {
+	function addToCart(id) {
 		let qty = document.getElementById('quantity').value
-
+		console.log(typeof (qty))
+		qty = parseInt(qty)
+		console.log(qty)
 		axios({
-			method: 'post',
 			url: '/add-to-cart',
+			method: 'post',
 			data: {
 				productId: id,
 				quantity: qty
@@ -724,11 +726,7 @@
 		})
 			.then(function (response) {
 				console.log(response)
-				Swal.fire({
-					title: 'Alert',
-					text: response.data.message || "You haven't Login yet",
-					footer: '<a href="">Why do I have this issue?</a>'
-				})
+
 
 			})
 			.catch(function (error) {
